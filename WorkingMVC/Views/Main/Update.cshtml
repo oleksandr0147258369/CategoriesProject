@@ -1,0 +1,36 @@
+@model CategoryUpdateModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Update category</title>
+</head>
+<body>
+<div>
+    <h1 class="h1 text-center">Update Category</h1>
+    <form asp-action="Update" asp-route-id="@Model.Id" enctype="multipart/form-data"
+          class="col-md-6 offset-md-3">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label>Поточне фото:</label><br />
+            <img src="/images/@Model.CurrentImage" width="150" />
+        </div>
+
+        <div class="mb-3">
+            <label>Нове фото (за бажанням):</label>
+            <input asp-for="Image" type="file" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+</body>
+</html>
