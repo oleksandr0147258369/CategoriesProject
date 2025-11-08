@@ -3,6 +3,7 @@ using WorkingMVC.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using WorkingMVC.Interfaces;
+using WorkingMVC.Repositories;
 using WorkingMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,8 @@ builder.Services.AddDbContext<MyAppDbContext>(opt =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
@@ -51,7 +53,7 @@ app.UseStaticFiles(new StaticFileOptions
 using (var scoped = app.Services.CreateScope())
 {
     var myAppDbContext = scoped.ServiceProvider.GetRequiredService<MyAppDbContext>();
-    myAppDbContext.Database.Migrate(); //якщо ми не робили міграціії
+    myAppDbContext.Database.Migrate(); //пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     if(!myAppDbContext.Categories.Any())
     {
@@ -59,12 +61,12 @@ using (var scoped = app.Services.CreateScope())
         //{
         //    new CategoryEntity 
         //    { 
-        //        Name = "Напої безалкогольні", 
+        //        Name = "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", 
         //        Image = "https://src.zakaz.atbmarket.com/cache/category/%D0%91%D0%B5%D0%B7%D0%B0%D0%BB%D0%BA%D0%BE%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D1%96%20%D0%BD%D0%B0%D0%BF%D0%BE%D1%96%CC%88.webp"
         //    },
         //    new CategoryEntity
         //    {
-        //        Name = "Овочі та фрукти",
+        //        Name = "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ",
         //        Image = "https://src.zakaz.atbmarket.com/cache/category/%D0%9E%D0%B2%D0%BE%D1%87%D1%96%20%D1%82%D0%B0%20%D1%84%D1%80%D1%83%D0%BA%D1%82%D0%B8.webp"
         //    }
         //};
