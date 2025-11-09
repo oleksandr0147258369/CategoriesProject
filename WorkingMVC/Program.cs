@@ -1,14 +1,15 @@
+using Microsoft.AspNetCore.Identity;
 using WorkingMVC.Data;
-using WorkingMVC.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using WorkingMVC.Data.Entities.Identity;
 using WorkingMVC.Interfaces;
 using WorkingMVC.Repositories;
 using WorkingMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Додаємо сервіси
 builder.Services.AddDbContext<MyAppDbContext>(opt => 
     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -19,9 +20,20 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 
+builder.Services.AddIdentity<UserEntity, RoleEntity>(options =>
+    {
+        options.Password.RequireDigit = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequiredLength = 6;
+        options.Password.RequiredUniqueChars = 1;
+    })
+    .AddEntityFrameworkStores<MyAppDbContext>()
+    .AddDefaultTokenProviders();
+// Компілюємо проєкт
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -42,37 +54,32 @@ var dirImageName = builder.Configuration.GetValue<string>("DirImageName") ?? "te
 // Console.WriteLine("Image dir {0}", dirImageName);
 var path = Path.Combine(Directory.GetCurrentDirectory(), dirImageName);
 Directory.CreateDirectory(dirImageName);
-
+// Використовуємо готові файли які не змінюються (.css, .js, .html ...)
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(path),
     RequestPath = $"/{dirImageName}"
 });
 
-
+// додаємо ролі для користувача, якщо таких в базі не існує
 using (var scoped = app.Services.CreateScope())
 {
     var myAppDbContext = scoped.ServiceProvider.GetRequiredService<MyAppDbContext>();
-    myAppDbContext.Database.Migrate(); //���� �� �� ������ ��������
+    var roleManager = scoped.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
+    myAppDbContext.Database.Migrate();
 
-    if(!myAppDbContext.Categories.Any())
+    if (!roleManager.Roles.Any())
     {
-        //var categories = new List<CategoryEntity>
-        //{
-        //    new CategoryEntity 
-        //    { 
-        //        Name = "���� ������������", 
-        //        Image = "https://src.zakaz.atbmarket.com/cache/category/%D0%91%D0%B5%D0%B7%D0%B0%D0%BB%D0%BA%D0%BE%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D1%96%20%D0%BD%D0%B0%D0%BF%D0%BE%D1%96%CC%88.webp"
-        //    },
-        //    new CategoryEntity
-        //    {
-        //        Name = "����� �� ������",
-        //        Image = "https://src.zakaz.atbmarket.com/cache/category/%D0%9E%D0%B2%D0%BE%D1%87%D1%96%20%D1%82%D0%B0%20%D1%84%D1%80%D1%83%D0%BA%D1%82%D0%B8.webp"
-        //    }
-        //};
-        //myAppDbContext.Categories.AddRange(categories);
-        //myAppDbContext.SaveChanges();
+        string[] roles = { "Admin",   "User" };
+        foreach (var role in roles)
+        {
+            var result = roleManager.CreateAsync(new RoleEntity(role)).Result;
+            if (result.Succeeded)
+            {
+                Console.WriteLine("Role Created");
+            }
+        }
     }
 }
-
+// запускаємо вебдодаток
 app.Run();
