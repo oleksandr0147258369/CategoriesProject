@@ -30,11 +30,21 @@
 	<ItemGroup>
 	  <_ContentIncludedByDefault Remove="Views\Users\Edit.cshtml" />
 	  <_ContentIncludedByDefault Remove="Views\Users\Index.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Categories\Create.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Categories\Index.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Categories\Update.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AdditionalFiles Include="Areas\Admin\Views\Categories\Create.cshtml" />
+	  <AdditionalFiles Include="Areas\Admin\Views\Categories\Index.cshtml" />
+	  <AdditionalFiles Include="Areas\Admin\Views\Categories\Update.cshtml" />
 	  <AdditionalFiles Include="Areas\Admin\Views\Users\Edit.cshtml" />
 	  <AdditionalFiles Include="Areas\Admin\Views\Users\Index.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Views\Categories\Index.cshtml" />
 	</ItemGroup>
 
 </Project>

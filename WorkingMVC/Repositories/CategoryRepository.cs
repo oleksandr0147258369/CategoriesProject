@@ -15,7 +15,7 @@ public class CategoryRepository : BaseRepository<CategoryEntity, int>,
     public async Task<CategoryEntity?> FindByNameAsync(string name)
     {
         var nameLower = name.Trim().ToLower();
-        var entity = await _dbSet.SingleOrDefaultAsync(c => c.Name.ToLower() == nameLower);
+        var entity = await _dbSet.SingleOrDefaultAsync(c => c.Name.ToLower() == nameLower && !c.IsDeleted);
         return entity;
     }
 }

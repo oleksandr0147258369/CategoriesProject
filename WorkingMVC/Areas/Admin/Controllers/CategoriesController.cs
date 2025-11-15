@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WorkingMVC.Constants;
 using WorkingMVC.Models.Category;
 using WorkingMVC.Interfaces;
 
-namespace WorkingMVC.Controllers;
+namespace WorkingMVC.Areas.Admin.Controllers;
 
+[Area("Admin")]
+[Authorize(Roles = Roles.Admin)]
 // Контролер для керування категоріями
-public class MainController(
+public class CategoriesController(
     ICategoryService categoryService) : Controller
 {
     // Показати список усіх категорій

@@ -74,7 +74,7 @@ public class AccountController(
         {
             await userManager.AddToRoleAsync(user, Roles.User);
             await signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Index", "Main");
+            return RedirectToAction("Index", "Categories");
         }
 
         foreach (var item in result.Errors)

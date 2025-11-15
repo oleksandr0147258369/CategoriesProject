@@ -47,7 +47,7 @@ app.MapAreaControllerRoute(
     pattern: "Admin/{controller=Dashboards}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "Default",
-    pattern: "{controller=Main}/{action=Index}/{id?}").WithStaticAssets();
+    pattern: "{controller=Categories}/{action=Index}/{id?}").WithStaticAssets();
 
 app.UseAuthorization();
 
@@ -55,7 +55,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Main}/{action=Index}/{id?}")
+    pattern: "{controller=Categories}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 var dirImageName = builder.Configuration.GetValue<string>("DirImageName") ?? "test";
