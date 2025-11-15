@@ -41,6 +41,14 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseRouting();
 
+app.MapAreaControllerRoute(
+    name: "Admin", 
+    areaName: "Admin", 
+    pattern: "Admin/{controller=Dashboards}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "Default",
+    pattern: "{controller=Main}/{action=Index}/{id?}").WithStaticAssets();
+
 app.UseAuthorization();
 
 app.MapStaticAssets();

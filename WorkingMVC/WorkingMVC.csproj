@@ -22,4 +22,19 @@
 		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Areas\Admin\" />
+	  <Folder Include="wwwroot\admin\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Views\Users\Edit.cshtml" />
+	  <_ContentIncludedByDefault Remove="Views\Users\Index.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="Areas\Admin\Views\Users\Edit.cshtml" />
+	  <AdditionalFiles Include="Areas\Admin\Views\Users\Index.cshtml" />
+	</ItemGroup>
+
 </Project>

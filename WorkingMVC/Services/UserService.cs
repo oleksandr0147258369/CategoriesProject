@@ -2,10 +2,10 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WorkingMVC.Areas.Admin.Models.Users;
 using WorkingMVC.Data;
 using WorkingMVC.Data.Entities.Identity;
 using WorkingMVC.Interfaces;
-using WorkingMVC.Models.Users;
 
 namespace WorkingMVC.Services;
 
@@ -57,6 +57,8 @@ public class UserService(MyAppDbContext context, IMapper mapper, UserManager<Use
         user.LastName = model.LastName;
         user.Email = model.Email;
         user.UserName = model.Email;
+        user.NormalizedUserName = model.Email.ToUpper();
+        user.NormalizedEmail = model.Email.ToUpper();
 
         if (model.NewImage != null)
         {

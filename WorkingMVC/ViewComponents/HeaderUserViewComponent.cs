@@ -17,6 +17,8 @@ public class HeaderUserViewComponent : ViewComponent
         if (!User.Identity.IsAuthenticated)
             return View(new HeaderUserViewModel {FirstName = "", SecondName = "", Image = ""});
 
+        Console.WriteLine(User.Identity.Name);
+        Console.WriteLine(User.Identity.IsAuthenticated);
         var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
         var model = new HeaderUserViewModel
