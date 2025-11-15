@@ -19,6 +19,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddIdentity<UserEntity, RoleEntity>(options =>
     {
@@ -70,7 +71,7 @@ using (var scoped = app.Services.CreateScope())
 
     if (!roleManager.Roles.Any())
     {
-        string[] roles = { "Admin",   "User" };
+        string[] roles = { "Admin",   "Users" };
         foreach (var role in roles)
         {
             var result = roleManager.CreateAsync(new RoleEntity(role)).Result;

@@ -1,0 +1,52 @@
+@using WorkingMVC.Constants
+@model EditUserViewModel
+
+<div class="container">
+    <h1 class="text-center">User Editor</h1>
+    <form asp-action="Edit" asp-controller="Users" enctype="multipart/form-data"
+          class="col-md-6 offset-md-3">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <input hidden asp-for="Id"/>
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label"></label>
+            <input asp-for="FirstName" class="form-control">
+            <span for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" class="form-control">
+            <span for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control">
+            <span for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <p>Current Image: <img class="rounded-circle" alt="user photo" src="../images/@Model.Image" width="50px" height="50px"/></p>
+            <label asp-for="NewImage" class="form-label">New Image</label>
+            <input type="file" accept="image/*" asp-for="NewImage" class="form-control"/>
+            <span for="Image" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            @foreach (var role in Roles.AllRoles)
+            {
+                <input class="form-check-input"
+                       type="checkbox"
+                       name="Roles"
+                       value="@role"
+                       @(Model.Roles.Contains(role) ? "checked" : "") />
+
+                <label class="form-check-label">@role</label>
+                <br />
+            }
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>

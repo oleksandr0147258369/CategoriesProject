@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WorkingMVC.Constants;
 using WorkingMVC.Data.Entities.Identity;
 using WorkingMVC.Interfaces;
 using WorkingMVC.Models.Account;
@@ -15,7 +16,6 @@ public class AccountController(
     SignInManager<UserEntity> signInManager) : Controller
 {
     private EmailSenderService emailSenderService;
-    // Створено метод для відображення сторінки реєстрації
     [HttpGet]
     public IActionResult Login()
     {
@@ -72,6 +72,7 @@ public class AccountController(
 
         if (result.Succeeded)
         {
+            await userManager.AddToRoleAsync(user, Roles.User);
             await signInManager.SignInAsync(user, isPersistent: false);
             return RedirectToAction("Index", "Main");
         }

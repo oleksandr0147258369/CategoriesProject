@@ -15,7 +15,7 @@ public class HeaderUserViewComponent : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync()
     {
         if (!User.Identity.IsAuthenticated)
-            return View(new HeaderUserViewModel(){FirstName = "", SecondName = "", Image = ""});
+            return View(new HeaderUserViewModel {FirstName = "", SecondName = "", Image = ""});
 
         var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 

@@ -306,7 +306,7 @@ namespace WorkingMVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorkingMVC.Data.Entities.Identity.UserEntity", "User")
+                    b.HasOne("WorkingMVC.Data.Entities.Identity.UserEntity", "Users")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,7 +314,7 @@ namespace WorkingMVC.Migrations
 
                     b.Navigation("Role");
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("WorkingMVC.Data.Entities.Identity.RoleEntity", b =>
